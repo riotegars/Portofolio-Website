@@ -69,10 +69,10 @@ export default function PortfolioWebsite() {
     e.preventDefault();
 
     emailjs.sendForm(
-      "YOUR_SERVICE_ID",
-      "YOUR_TEMPLATE_ID",
+      "portofolio_contact",
+      "template_p33fscr",
       e.target,
-      "YOUR_PUBLIC_KEY"
+      "rmvUfrkrTrcjpKSIu"
     )
     .then(() => {
       alert("Message Sent Successfully!");
