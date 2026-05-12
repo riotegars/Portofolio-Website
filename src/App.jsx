@@ -7,7 +7,12 @@ import {
 } from "react-icons/fa";
 import profile from "./assets/profile.jpg";
 import emailjs from "@emailjs/browser";
-
+import {
+  FaPython,
+  FaDatabase,
+  FaBrain,
+  FaChartBar
+} from "react-icons/fa";
 
 export default function PortfolioWebsite() {
   const skills = [
@@ -52,17 +57,38 @@ export default function PortfolioWebsite() {
     {
       name: "Chelsea FC Performance Analysis",
       tech: "Power BI, PostgreSQL",
-      desc: "Interactive dashboard for monitoring operational data and analytics."
+      desc: "Interactive dashboard for monitoring operational data and analytics.",
+      link: "https://github.com/riotegars/chelsea-performance-analysis"
     },
     {
       name: "Sample Superstore Analysis",
       tech: "Power BI, PostgreSQL",
-      desc: "This project analyzes the Sample Superstore dataset using SQL. The goal is to explore sales performance, profit trends, and product category insights to better understand business performance."
+      desc: "This project analyzes the Sample Superstore dataset using SQL. The goal is to explore sales performance, profit trends, and product category insights to better understand business performance.",
+      link:"https://github.com/riotegars/sample-superstore-analysis"
     },
     {
       name: "Breast Cancer Classification Using Weighted CNN",
       tech: "TensorFlow, Python",
-      desc: "This project focuses on classifying breast cancer using a weighted Convolutional Neural Network (CNN) implemented in TensorFlow. The model is designed to handle imbalanced datasets by assigning different weights to classes, improving classification performance and accuracy."
+      desc: "This project focuses on classifying breast cancer using a weighted Convolutional Neural Network (CNN) implemented in TensorFlow. The model is designed to handle imbalanced datasets by assigning different weights to classes, improving classification performance and accuracy.",
+      link: "https://github.com/riotegars/breast-cancer-clasification-using-weighted-CNN"
+    },
+    {
+      name: "Covid-19 Dashboard",
+      tech: "Tableau",
+      desc: "The COVID-19 Spread Dashboard is an interactive visualization project that displays COVID-19 case distribution, recovery rates, and death statistics across different regions.",
+      link: "https://public.tableau.com/app/profile/rio.tegar.syahputra/viz/Covid-19Dashboard_17124790268740/Dashboard1?publish=yes"
+    },
+        {
+      name: "Dashboard Performance Superstore",
+      tech: "Tableau",
+      desc: "Interactive business intelligence project designed to analyze sales, profit, and customer performance data. The dashboard provides insights into product sales, regional performance, and business trends through visual charts and reports, helping users make data-driven decisions effectively.",
+      link: "https://public.tableau.com/app/profile/rio.tegar.syahputra/viz/dashboardperformancesuperstore/Dashboard1?publish=yes"
+    },
+    {
+      name: "Dashboard Highest Grossing Movies",
+      tech: "Tableau",
+      desc: "The Highest Grossing Movies Dashboard is an interactive data visualization project that analyzes the world’s highest-grossing films based on revenue, genre, ratings, and release year.",
+      link: "https://public.tableau.com/app/profile/rio.tegar.syahputra/viz/HighestHolywoodGrossingMovies_17126560146630/Dashboard1"
     }
   ];
   const sendEmail = (e) => {
@@ -257,6 +283,127 @@ export default function PortfolioWebsite() {
         </div>
       </section>
 
+      {/* Technical Skills */}
+<section id="skills" className="py-24 px-6 bg-gray-50">
+
+  <div className="max-w-7xl mx-auto">
+
+    {/* Title */}
+    <div className="text-center mb-20">
+
+      <h2 className="text-5xl font-bold text-gray-900 mb-4">
+        Technical Skills
+      </h2>
+
+      <div className="w-24 h-1 bg-gradient-to-r from-blue-500 to-purple-500 mx-auto rounded-full mb-4" />
+
+      <p className="text-gray-500 text-lg">
+        Areas of Expertise
+      </p>
+
+    </div>
+
+    {/* Skills Grid */}
+    <div className="grid md:grid-cols-4 gap-8">
+
+      {/* Card 1 */}
+      <div className="bg-white rounded-3xl p-8 shadow-lg hover:-translate-y-2 transition duration-300">
+
+        <div className="text-blue-600 text-5xl mb-6 flex justify-center">
+          <FaPython />
+        </div>
+
+        <h3 className="text-2xl font-bold text-center mb-8">
+          Programming
+        </h3>
+
+        <div className="space-y-4 text-gray-600">
+
+          <p>✓ Python</p>
+          <p>✓ SQL</p>
+          <p>✓ TensorFlow</p>
+          <p>✓ Data Structures</p>
+          <p>✓ Automation Scripting</p>
+
+        </div>
+
+      </div>
+
+      {/* Card 2 */}
+      <div className="bg-white rounded-3xl p-8 shadow-lg hover:-translate-y-2 transition duration-300">
+
+        <div className="text-blue-600 text-5xl mb-6 flex justify-center">
+          <FaDatabase />
+        </div>
+
+        <h3 className="text-2xl font-bold text-center mb-8">
+          Data Analytics
+        </h3>
+
+        <div className="space-y-4 text-gray-600">
+
+          <p>✓ Data Cleaning</p>
+          <p>✓ PostgreSQL</p>
+          <p>✓ Data Visualization</p>
+          <p>✓ Statistical Analysis</p>
+          <p>✓ Exploratory Data Analysis</p>
+
+        </div>
+
+      </div>
+
+      {/* Card 3 */}
+      <div className="bg-white rounded-3xl p-8 shadow-lg hover:-translate-y-2 transition duration-300">
+
+        <div className="text-blue-600 text-5xl mb-6 flex justify-center">
+          <FaBrain />
+        </div>
+
+        <h3 className="text-2xl font-bold text-center mb-8">
+          Machine Learning
+        </h3>
+
+        <div className="space-y-4 text-gray-600">
+
+          <p>✓ CNN</p>
+          <p>✓ Neural Networks</p>
+          <p>✓ Model Training</p>
+          <p>✓ Image Classification</p>
+          <p>✓ Deep Learning</p>
+
+        </div>
+
+      </div>
+
+        {/* Technical Skills */}
+        <div className="bg-white rounded-3xl p-8 shadow-lg hover:-translate-y-2 transition duration-300">
+
+          <div className="text-blue-600 text-5xl mb-6 flex justify-center">
+            <FaChartBar />
+          </div>
+
+          <h3 className="text-2xl font-bold text-center mb-8">
+            Business Intelligence
+          </h3>
+
+          <div className="space-y-4 text-gray-600">
+
+            <p>✓ Power BI</p>
+            <p>✓ Tableau</p>
+            <p>✓ Looker Studio</p>
+            <p>✓ Dashboard Development</p>
+            <p>✓ Reporting & Insights</p>
+
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+
+  </section>
+
       {/* Experience */}
       <section id="experience" className="bg-gray-50 py-24 px-6">
 
@@ -327,10 +474,13 @@ export default function PortfolioWebsite() {
 
           {projects.map((project, index) => (
 
-            <div
-              key={index}
-              className="bg-white border border-gray-200 rounded-3xl p-8 shadow-lg hover:-translate-y-2 transition duration-300 hover:border-purple-400"
-            >
+            <a
+            key={index}
+            href={project.link}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="block bg-white border border-gray-200 rounded-3xl p-8 shadow-lg hover:-translate-y-2 transition duration-300 hover:border-purple-400 hover:shadow-2xl cursor-pointer"
+          >
 
               <div className="h-14 w-14 rounded-2xl bg-gradient-to-r from-blue-500 to-purple-600 mb-6 flex items-center justify-center text-xl font-bold text-white">
                 {index + 1}
@@ -348,7 +498,7 @@ export default function PortfolioWebsite() {
                 {project.desc}
               </p>
 
-            </div>
+            </a>
 
           ))}
 
@@ -423,7 +573,7 @@ export default function PortfolioWebsite() {
             </h4>
 
             <p className="text-gray-600 text-lg">
-              riotegar@email.com
+              tegarsrio12@email.com
             </p>
           </div>
         </div>
@@ -440,7 +590,7 @@ export default function PortfolioWebsite() {
             </h4>
 
             <p className="text-gray-600 text-lg">
-              Jakarta, Indonesia
+              Jakarta Selatan, Indonesia
             </p>
           </div>
         </div>
@@ -466,14 +616,14 @@ export default function PortfolioWebsite() {
         <div className="flex gap-5">
 
           <a
-            href="mailto:youremail@gmail.com"
+            href="mailto:tegarsrio12@email.com"
             className="w-12 h-12 rounded-full bg-white shadow-md flex items-center justify-center text-2xl text-gray-800 hover:scale-110 transition"
           >
             <FaEnvelope />
           </a>
 
           <a
-            href="https://linkedin.com"
+            href="https://linkedin.com/in/riotegarsyahputra"
             target="_blank"
             className="w-12 h-12 rounded-full bg-white shadow-md flex items-center justify-center text-2xl text-gray-800 hover:scale-110 transition"
           >
@@ -481,7 +631,7 @@ export default function PortfolioWebsite() {
           </a>
 
           <a
-            href="https://github.com"
+            href="https://github.com/riotegarsyahputra"
             target="_blank"
             className="w-12 h-12 rounded-full bg-white shadow-md flex items-center justify-center text-2xl text-gray-800 hover:scale-110 transition"
           >
