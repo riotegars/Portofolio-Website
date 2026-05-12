@@ -183,8 +183,7 @@ export default function PortfolioWebsite() {
 </nav>
 
       {/* Hero Section */}
-<section className="relative min-h-screen flex items-center px-6">        
-  <div className="max-w-7xl mx-auto grid md:grid-cols-2 gap-16 items-center">
+  <section className="relative min-h-screen flex items-center px-6 pt-24 md:pt-0">  <div className="max-w-7xl mx-auto grid md:grid-cols-2 gap-16 items-center">
 
   {/* Left Side */}
   <div>
@@ -515,7 +514,7 @@ export default function PortfolioWebsite() {
           </h2>
 
           <p className="text-gray-600 text-lg max-w-2xl mx-auto mb-8">
-            Open to collaborations, internships, freelance opportunities, and exciting technology projects.
+            Open to collaborations, freelance opportunities, and exciting technology projects.
           </p>
 
           <a
