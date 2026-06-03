@@ -261,7 +261,13 @@ const prevProjects = () => {
 
     {/* Menu */}
     <div className="hidden md:flex items-center gap-8 text-sm font-medium text-gray-600">
-
+      <a
+        href="#home"
+        className="hover:text-blue-800 transition relative group"
+      >
+        Home
+        <span className="absolute left-0 -bottom-1 w-0 h-0.5 bg-blue-800 transition-all group-hover:w-full"></span>
+      </a>
       <a
         href="#about"
         className="hover:text-blue-800 transition relative group"
@@ -310,7 +316,9 @@ const prevProjects = () => {
 </nav>
 
       {/* Hero Section */}
-  <section className="relative min-h-screen flex items-center px-6 pt-24 md:pt-0">  <div className="max-w-7xl mx-auto grid md:grid-cols-2 gap-16 items-center">
+  <section 
+  id="home"
+  className="relative min-h-screen flex items-center px-6 pt-24 md:pt-0">  <div className="max-w-7xl mx-auto grid md:grid-cols-2 gap-16 items-center">
 
   {/* Left Side */}
   <div>
@@ -396,7 +404,7 @@ const prevProjects = () => {
     <div className="relative">
 
       {/* Glow */}
-      <div className="absolute inset-0 bg-gradient-to-r from-blue-400 to-purple-500 blur-3xl opacity-20 rounded-full"></div>
+      <div className="absolute inset-0 bg-gradient-to-r from-blue-700 to-slate-800 blur-3xl opacity-20 rounded-full"></div>
 
     <img
       src={profile}
@@ -422,6 +430,8 @@ const prevProjects = () => {
 
 </div>
       </section>
+
+      
   
       {/* About */}
       <section id="about" className="max-w-6xl mx-auto px-6 py-24">
