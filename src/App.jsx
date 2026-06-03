@@ -9,12 +9,71 @@ import profile from "./assets/profile.jpg";
 import emailjs from "@emailjs/browser";
 import {
   FaPython,
+  FaTools,
+  FaBriefcase,
   FaDatabase,
   FaBrain,
-  FaChartBar
+  FaChartBar,
+  FaDownload
 } from "react-icons/fa";
+import { TypeAnimation } from "react-type-animation";
+import { useState, useEffect, useRef } from "react";
+import { motion } from "framer-motion";
 
+function AnimatedCounter({ end, suffix = "" }) {
+  const [count, setCount] = useState(0);
+  const [isVisible, setIsVisible] = useState(false);
+  const counterRef = useRef(null);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        setIsVisible(entry.isIntersecting);
+      },
+      {
+        threshold: 0.5,
+      }
+    );
+
+    if (counterRef.current) {
+      observer.observe(counterRef.current);
+    }
+
+    return () => observer.disconnect();
+  }, []);
+
+  useEffect(() => {
+    if (!isVisible) {
+      setCount(0);
+      return;
+    }
+
+    let current = 0;
+
+    const timer = setInterval(() => {
+      current++;
+
+      if (current >= end) {
+        current = end;
+        clearInterval(timer);
+      }
+
+      setCount(current);
+    }, 300);
+
+    return () => clearInterval(timer);
+  }, [isVisible, end]);
+
+  return (
+    <span ref={counterRef}>
+      {count}
+      {suffix}
+    </span>
+  );
+}
 export default function PortfolioWebsite() {
+  const [selectedProject, setSelectedProject] = useState(null);
+  const [startIndex, setStartIndex] = useState(0);
   const skills = [
     "Python",
     "SQL",
@@ -58,37 +117,67 @@ export default function PortfolioWebsite() {
       name: "Chelsea FC Performance Analysis",
       tech: "Power BI, PostgreSQL",
       desc: "Interactive dashboard for monitoring operational data and analytics.",
-      link: "https://github.com/riotegars/chelsea-performance-analysis"
+      link: "https://github.com/riotegars/chelsea-performance-analysis",
+      image: "Chelsea Dashboard.jpeg",
+      details:[
+                "Interactive KPI Dashboard",
+                "Games Performance Analysis",
+                "Match Statistics Tracking",
+                "Built using Power BI & PostgreSQL"]
     },
     {
       name: "Sample Superstore Analysis",
       tech: "Power BI, PostgreSQL",
       desc: "This project analyzes the Sample Superstore dataset using SQL. The goal is to explore sales performance, profit trends, and product category insights to better understand business performance.",
-      link:"https://github.com/riotegars/sample-superstore-analysis"
-    },
-    {
-      name: "Breast Cancer Classification Using Weighted CNN",
-      tech: "TensorFlow, Python",
-      desc: "This project focuses on classifying breast cancer using a weighted Convolutional Neural Network (CNN) implemented in TensorFlow. The model is designed to handle imbalanced datasets by assigning different weights to classes, improving classification performance and accuracy.",
-      link: "https://github.com/riotegars/breast-cancer-clasification-using-weighted-CNN"
+      link:"https://github.com/riotegars/sample-superstore-analysis",
+      image: "Superstore Dahboard.jpeg", 
+      details:[
+                "Interactive KPI Dashboard",
+                "Technology category generates the highest sales.",
+                "Some sub-categories have high discounts but low profit.",
+                "Sales trends vary across different regions.",
+                "Built using Power BI & PostgreSQL"]
+
     },
     {
       name: "Covid-19 Dashboard",
       tech: "Tableau",
       desc: "The COVID-19 Spread Dashboard is an interactive visualization project that displays COVID-19 case distribution, recovery rates, and death statistics across different regions.",
-      link: "https://public.tableau.com/app/profile/rio.tegar.syahputra/viz/Covid-19Dashboard_17124790268740/Dashboard1?publish=yes"
+      link: "https://public.tableau.com/app/profile/rio.tegar.syahputra/viz/Covid-19Dashboard_17124790268740/Dashboard1?publish=yes",
+      image: "Covid Dashboard.png",
+      details:[
+                "Analyzed global COVID-19 trends and case growth",
+                "Created interactive dashboards for cases, deaths, and recoveries",
+                "Compared country-level pandemic performance",
+                "Built visualizations using Power BI and SQL"
+              ]
     },
+
         {
       name: "Dashboard Performance Superstore",
       tech: "Tableau",
       desc: "Interactive business intelligence project designed to analyze sales, profit, and customer performance data. The dashboard provides insights into product sales, regional performance, and business trends through visual charts and reports, helping users make data-driven decisions effectively.",
-      link: "https://public.tableau.com/app/profile/rio.tegar.syahputra/viz/dashboardperformancesuperstore/Dashboard1?publish=yes"
+      link: "https://public.tableau.com/app/profile/rio.tegar.syahputra/viz/dashboardperformancesuperstore/Dashboard1?publish=yes",
+      image: "Sales Dashboard.png",
+      details: [
+                "Analyzed sales, profit, and customer performance",
+                "Identified top-performing products and categories",
+                "Created regional and segment-based insights",
+                "Developed interactive dashboards using Power BI"
+              ]
     },
     {
       name: "Dashboard Highest Grossing Movies",
       tech: "Tableau",
       desc: "The Highest Grossing Movies Dashboard is an interactive data visualization project that analyzes the world’s highest-grossing films based on revenue, genre, ratings, and release year.",
-      link: "https://public.tableau.com/app/profile/rio.tegar.syahputra/viz/HighestHolywoodGrossingMovies_17126560146630/Dashboard1"
+      link: "https://public.tableau.com/app/profile/rio.tegar.syahputra/viz/HighestHolywoodGrossingMovies_17126560146630/Dashboard1",
+      image: "Movies Dashboard.png",
+      details: [
+            "Explored worldwide box office revenue trends",
+            "Identified top-grossing movies across genres",
+            "Analyzed relationships between ratings and revenue",
+            "Built interactive visualizations using Power BI and SQL"
+          ]
     }
   ];
   const sendEmail = (e) => {
@@ -108,13 +197,49 @@ export default function PortfolioWebsite() {
       alert("Failed to send message.");
     });
   };
+const stats = [
+  {
+    icon: <FaChartBar />,
+    value: 3,
+    suffix: "+",
+    label: "Analytics Projects",
+  },
+  {
+    icon: <FaBriefcase />,
+    value: 2,
+    suffix: "",
+    label: "Industry Experience",
+  },
+  {
+    icon: <FaTools />,
+    value: 8,
+    suffix: "+",
+    label: "Analytics Tools",
+  },
+   {
+    icon: <FaDatabase />,
+    text: "SQL",
+    label: "Power BI",
+  }
+];
+const itemsPerPage = 3;
 
+const nextProjects = () => {
+  if (startIndex + itemsPerPage < projects.length) {
+    setStartIndex(startIndex + itemsPerPage);
+  }
+};
+
+const prevProjects = () => {
+  if (startIndex - itemsPerPage >= 0) {
+    setStartIndex(startIndex - itemsPerPage);
+  }
+};
   return (
     <div className="min-h-screen bg-white text-gray-900 font-sans overflow-x-hidden">
 
       {/* Background Glow */}
-      <div className="absolute top-0 left-0 w-96 h-96 bg-blue-200 blur-3xl rounded-full opacity-40" />
-      <div className="absolute bottom-0 right-0 w-96 h-96 bg-purple-200 blur-3xl rounded-full opacity-40" />
+<div className="absolute top-20 right-0 w-[500px] h-[500px] bg-blue-200 blur-[150px] rounded-full opacity-15" />
 
       {/* Navbar */}
      <nav className="fixed top-0 w-full z-50 backdrop-blur-xl bg-white/70 border-b border-gray-200 shadow-sm">
@@ -124,7 +249,7 @@ export default function PortfolioWebsite() {
     {/* Logo */}
     <div className="flex items-center gap-3">
 
-      <div className="w-10 h-10 rounded-full bg-gradient-to-r from-blue-500 to-purple-500 flex items-center justify-center text-white font-bold shadow-md">
+      <div className="w-10 h-10 rounded-full bg-gradient-to-r bg-gradient-to-r from-blue-700 to-slate-800 flex items-center justify-center text-white font-bold shadow-md">
         R
       </div>
 
@@ -139,42 +264,44 @@ export default function PortfolioWebsite() {
 
       <a
         href="#about"
-        className="hover:text-blue-600 transition relative group"
+        className="hover:text-blue-800 transition relative group"
       >
         About
-        <span className="absolute left-0 -bottom-1 w-0 h-0.5 bg-blue-500 transition-all group-hover:w-full"></span>
+        <span className="absolute left-0 -bottom-1 w-0 h-0.5 bg-blue-800 transition-all group-hover:w-full"></span>
       </a>
 
       <a
         href="#experience"
-        className="hover:text-blue-600 transition relative group"
+        className="hover:text-blue-800 transition relative group"
       >
         Experience
-        <span className="absolute left-0 -bottom-1 w-0 h-0.5 bg-blue-500 transition-all group-hover:w-full"></span>
+        <span className="absolute left-0 -bottom-1 w-0 h-0.5 bg-blue-800 transition-all group-hover:w-full"></span>
       </a>
 
       <a
         href="#projects"
-        className="hover:text-blue-600 transition relative group"
+        className="hover:text-blue-800 transition relative group"
       >
         Projects
-        <span className="absolute left-0 -bottom-1 w-0 h-0.5 bg-blue-500 transition-all group-hover:w-full"></span>
+        <span className="absolute left-0 -bottom-1 w-0 h-0.5 bg-blue-800 transition-all group-hover:w-full"></span>
       </a>
 
       <a
         href="#contact"
-        className="hover:text-blue-600 transition relative group"
+        className="hover:text-blue-800 transition relative group"
       >
         Contact
-        <span className="absolute left-0 -bottom-1 w-0 h-0.5 bg-blue-500 transition-all group-hover:w-full"></span>
+        <span className="absolute left-0 -bottom-1 w-0 h-0.5 bg-blue-800 transition-all group-hover:w-full"></span>
       </a>
 
       {/* Resume Button */}
       <a
-        href="#"
-        className="px-5 py-2 rounded-xl bg-gradient-to-r from-blue-500 to-purple-500 text-white shadow-md hover:scale-105 transition"
+        href="/CV - Rio Tegar Syahputra.pdf"
+        target="_blank"
+        rel="noopener noreferrer"
+        className="px-5 py-2 rounded-xl bg-gradient-to-r bg-gradient-to-r from-blue-700 to-slate-800 text-white shadow-md hover:scale-105 transition"
       >
-        Home
+        Resume
       </a>
 
     </div>
@@ -188,24 +315,66 @@ export default function PortfolioWebsite() {
   {/* Left Side */}
   <div>
 
-    <h1 className="text-5xl md:text-7xl font-extrabold leading-tight mb-6">
+    <h1 className="text-5xl md:text-6xl font-bold leading-tight mb-5">
       Rio Tegar Syahputra
 
-      <span className="block bg-gradient-to-r from-blue-500 to-purple-500 bg-clip-text text-transparent">
-        Data Enthusiast
-      </span>
+<TypeAnimation
+  sequence={[
+    "Data Analyst",
+    2000,
+    "Business Intelligence Analyst",
+    2000,
+    "Data Visualization Specialist",
+    2000,
+    "SQL & Power BI Enthusiast",
+    2000,
+  ]}
+  wrapper="span"
+  speed={50}
+  repeat={Infinity}
+  className="block mt-3 text-2xl md:text-3xl font-bold leading-relaxed bg-gradient-to-r from-blue-700 to-slate-800 bg-clip-text text-transparent"
+/>
     </h1>
 
     <p className="text-gray-600 text-lg md:text-xl leading-relaxed max-w-xl">
-      Passionate about Data Intelligent Computing with hands-on experience
-      in Python, data analysis, and machine learning.
+      Transforming raw data into actionable insights through SQL, Power BI, Tableau, and Python. Passionate about data storytelling, business intelligence, and data-driven decision making.
     </p>
 
+<div className="grid grid-cols-3 gap-4 mt-8 max-w-md">
+
+  <div className="bg-white/80 backdrop-blur-sm rounded-2xl p-4 text-center shadow-md border border-gray-300">
+    <h3 className="text-2xl font-bold text-blue-800">
+      <AnimatedCounter end={5} suffix="+" />
+    </h3>
+    <p className="text-sm text-gray-500">
+      Projects
+    </p>
+  </div>
+
+  <div className="bg-white/80 backdrop-blur-sm rounded-2xl p-4 text-center shadow-md border border-gray-300">
+    <h3 className="text-2xl font-bold text-blue-800">
+      <AnimatedCounter end={2} />
+    </h3>
+    <p className="text-sm text-gray-500">
+      Experience
+    </p>
+  </div>
+
+  <div className="bg-white/80 backdrop-blur-sm rounded-2xl p-4 text-center shadow-md border border-gray-300">
+    <h3 className="text-2xl font-bold text-blue-800">
+      <AnimatedCounter end={8} suffix="+" />
+    </h3>
+    <p className="text-sm text-gray-500">
+      Analytics Tools
+    </p>
+  </div>
+
+</div>
     <div className="mt-10 flex flex-col sm:flex-row gap-4">
 
       <a
         href="#projects"
-        className="px-8 py-4 rounded-2xl bg-gradient-to-r from-blue-500 to-purple-600 text-white font-semibold hover:scale-105 transition duration-300 shadow-xl"
+        className="px-8 py-4 rounded-2xl bg-gradient-to-r from-blue-700 to-slate-800 text-white font-semibold hover:scale-105 transition duration-300 shadow-xl"
       >
         View Projects
       </a>
@@ -229,11 +398,23 @@ export default function PortfolioWebsite() {
       {/* Glow */}
       <div className="absolute inset-0 bg-gradient-to-r from-blue-400 to-purple-500 blur-3xl opacity-20 rounded-full"></div>
 
-      <img
-        src={profile}
-        alt="Rio Tegar"
-        className="relative w-[350px] h-[350px] object-cover rounded-full border-8 border-white shadow-2xl"
-      />
+    <img
+      src={profile}
+      alt="Rio Tegar"
+      className="
+        relative
+        w-[350px]
+        h-[350px]
+        object-cover
+        rounded-full
+        border-8
+        border-white
+        shadow-2xl
+        hover:scale-105
+        transition-all
+        duration-500
+      "
+    />
 
     </div>
 
@@ -241,7 +422,7 @@ export default function PortfolioWebsite() {
 
 </div>
       </section>
-
+  
       {/* About */}
       <section id="about" className="max-w-6xl mx-auto px-6 py-24">
 
@@ -294,9 +475,9 @@ export default function PortfolioWebsite() {
         Technical Skills
       </h2>
 
-      <div className="w-24 h-1 bg-gradient-to-r from-blue-500 to-purple-500 mx-auto rounded-full mb-4" />
+      <div className="w-24 h-1 bg-gradient-to-r from-blue-700 to-slate-700 mx-auto rounded-full mb-4" />
 
-      <p className="text-gray-500 text-lg">
+      <p className="text-gray-600 text-lg">
         Areas of Expertise
       </p>
 
@@ -308,7 +489,7 @@ export default function PortfolioWebsite() {
       {/* Card 1 */}
       <div className="bg-white rounded-3xl p-8 shadow-lg hover:-translate-y-2 transition duration-300">
 
-        <div className="text-blue-600 text-5xl mb-6 flex justify-center">
+        <div className="text-blue-800 text-5xl mb-6 flex justify-center">
           <FaPython />
         </div>
 
@@ -331,7 +512,7 @@ export default function PortfolioWebsite() {
       {/* Card 2 */}
       <div className="bg-white rounded-3xl p-8 shadow-lg hover:-translate-y-2 transition duration-300">
 
-        <div className="text-blue-600 text-5xl mb-6 flex justify-center">
+        <div className="text-blue-800 text-5xl mb-6 flex justify-center">
           <FaDatabase />
         </div>
 
@@ -354,7 +535,7 @@ export default function PortfolioWebsite() {
       {/* Card 3 */}
       <div className="bg-white rounded-3xl p-8 shadow-lg hover:-translate-y-2 transition duration-300">
 
-        <div className="text-blue-600 text-5xl mb-6 flex justify-center">
+        <div className="text-blue-800 text-5xl mb-6 flex justify-center">
           <FaBrain />
         </div>
 
@@ -377,7 +558,7 @@ export default function PortfolioWebsite() {
         {/* Technical Skills */}
         <div className="bg-white rounded-3xl p-8 shadow-lg hover:-translate-y-2 transition duration-300">
 
-          <div className="text-blue-600 text-5xl mb-6 flex justify-center">
+          <div className="text-blue-800 text-5xl mb-6 flex justify-center">
             <FaChartBar />
           </div>
 
@@ -462,58 +643,137 @@ export default function PortfolioWebsite() {
         </div>
       </section>
 
-      {/* Projects */}
-      <section id="projects" className="max-w-6xl mx-auto px-6 py-24">
+        {/* Projects */}
+  <section
+  id="projects"
+  className="max-w-6xl mx-auto px-6 py-24"
+>
 
-        <h2 className="text-4xl font-bold text-center mb-16">
-          Projects
-        </h2>
+  <div className="flex justify-between items-center mb-12">
 
-        <div className="grid md:grid-cols-3 gap-8">
+    <h2 className="text-4xl font-bold">
+      Featured Projects
+    </h2>
 
-          {projects.map((project, index) => (
+    <div className="flex gap-3">
 
-            <a
-            key={index}
-            href={project.link}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="block bg-white border border-gray-200 rounded-3xl p-8 shadow-lg hover:-translate-y-2 transition duration-300 hover:border-purple-400 hover:shadow-2xl cursor-pointer"
-          >
+<button
+  onClick={prevProjects}
+  className="
+    w-12 h-12
+    rounded-xl
+    border border-gray-200
+    bg-white/80
+    backdrop-blur-md
+    shadow-md
+    hover:shadow-lg
+    hover:-translate-y-1
+    transition-all
+  "
+>
+  ←
+</button>
 
-              <div className="h-14 w-14 rounded-2xl bg-gradient-to-r from-blue-500 to-purple-600 mb-6 flex items-center justify-center text-xl font-bold text-white">
-                {index + 1}
-              </div>
+<button
+  onClick={nextProjects}
+  className="
+    w-12 h-12
+    rounded-xl
+    bg-blue-800
+    text-white
+    shadow-md
+    hover:bg-blue-900
+    hover:-translate-y-1
+    hover:shadow-lg
+    transition-all
+  "
+>
+  →
+</button>
 
-              <h3 className="text-2xl font-semibold mb-3">
-                {project.name}
-              </h3>
+    </div>
 
-              <p className="text-blue-500 text-sm mb-4">
-                {project.tech}
-              </p>
+  </div>
 
-              <p className="text-gray-600 leading-relaxed">
-                {project.desc}
-              </p>
+  <motion.div
+    key={startIndex}
+    initial={{ x: 80, opacity: 0 }}
+    animate={{ x: 0, opacity: 1 }}
+    transition={{
+    duration: 0.6,
+    ease: [0.22, 1, 0.36, 1],
+     }}
+    className="grid md:grid-cols-3 gap-8"
+  >
+    {projects
+    .slice(startIndex, startIndex + 3)
+    .map((project, index) => (
 
-            </a>
+      <div
+        key={index}
+        onClick={() => setSelectedProject(project)}
+        className="
+          cursor-pointer
+          bg-white
+          border
+          border-gray-200
+          rounded-3xl
+          p-8
+          shadow-lg
+          hover:-translate-y-2
+          hover:shadow-xl
+          transition-all
+          duration-300
+        "
+      >
 
-          ))}
+          <div className="
+            w-14 h-14
+            rounded-2xl
+            bg-blue-900
+            text-white
+            flex
+            items-center
+            justify-center
+            font-bold
+            mb-6
+          ">
+            {startIndex + index + 1}
+          </div>
+
+          <h3 className="text-xl font-bold mb-3">
+            {project.name}
+          </h3>
+
+          <p className="text-blue-700 text-sm mb-4">
+            {project.tech}
+          </p>
+
+          <p className="text-gray-600 text-sm line-clamp-4">
+            {project.desc}
+          </p>
+
+          <div className="mt-6 text-blue-700 font-medium">
+            View Details →
+          </div>
 
         </div>
-      </section>
 
+      ))}
+
+  </motion.div>
+
+</section>
       {/* CTA */}
       <section className="px-6 pb-24">
 
-        <div className="max-w-5xl mx-auto bg-gradient-to-r from-blue-100 to-purple-100 border border-gray-200 rounded-[2rem] p-12 text-center shadow-xl">
+        <div className="max-w-5xl mx-auto bg-gradient-to-r from-blue-800 to-slate-800 border border-gray-200 rounded-[2rem] p-12 text-center shadow-xl">
 
-          <h2 className="text-4xl font-bold mb-6">
+          <h2 className="text-white text-4xl font-bold mb-6">
             Let’s Build Something Amazing Together
           </h2>
 
-          <p className="text-gray-600 text-lg max-w-2xl mx-auto mb-8">
+          <p className="text-white text-lg max-w-2xl mx-auto mb-8">
             Open to collaborations, freelance opportunities, and exciting technology projects.
           </p>
 
@@ -540,7 +800,7 @@ export default function PortfolioWebsite() {
         Get In Touch
       </h2>
 
-      <div className="w-24 h-1 bg-gradient-to-r from-blue-500 to-purple-500 mx-auto rounded-full mb-4" />
+      <div className="w-24 h-1 bg-gradient-to-r bg-gradient-to-r from-blue-700 to-slate-800 mx-auto rounded-full mb-4" />
 
       <p className="text-gray-500 text-xl">
         Let's discuss opportunities
@@ -562,7 +822,7 @@ export default function PortfolioWebsite() {
 
         {/* Email */}
         <div className="flex items-start gap-5 mb-7">
-          <div className="text-blue-600 text-2xl mt-1">
+          <div className="text-blue-800 text-2xl mt-1">
             <FaEnvelope />
           </div>
 
@@ -579,7 +839,7 @@ export default function PortfolioWebsite() {
 
         {/* Location */}
         <div className="flex items-start gap-5 mb-7">
-          <div className="text-blue-600 text-2xl mt-1">
+          <div className="text-blue-800 text-2xl mt-1">
             <FaMapMarkerAlt />
           </div>
 
@@ -596,7 +856,7 @@ export default function PortfolioWebsite() {
 
         {/* LinkedIn */}
         <div className="flex items-start gap-5 mb-14">
-          <div className="text-blue-600 text-2xl mt-1">
+          <div className="text-blue-800 text-2xl mt-1">
             <FaLinkedin />
           </div>
 
@@ -683,7 +943,7 @@ export default function PortfolioWebsite() {
 
           <button
             type="submit"
-            className="w-full px-10 py-3 rounded-2xl bg-blue-600 text-white text-lg font-semibold hover:bg-blue-700 transition shadow-xl"
+            className="w-full px-10 py-3 rounded-2xl bg-blue-900 text-white text-lg font-semibold hover:bg-blue-700 transition shadow-xl"
           >
             Send Message
           </button>
@@ -696,11 +956,105 @@ export default function PortfolioWebsite() {
 
     {/* Footer */}
     <div className="text-center mt-24 text-gray-500">
-      © 2026 Rio Tegar Syahutra. All rights reserved.
+      © 2026 Rio Tegar Syahputra. All rights reserved.
     </div>
 
   </div>
 </section>  
+{selectedProject && (
+
+  <div
+    className="
+      fixed
+      inset-0
+      z-50
+      flex
+      items-center
+      justify-center
+      bg-black/30
+      backdrop-blur-md
+      p-4
+    "
+    onClick={() => setSelectedProject(null)}
+  >
+
+    <div
+      onClick={(e) => e.stopPropagation()}
+      className="
+        bg-white
+        rounded-[16px]
+        overflow-hidden
+        max-w-xl
+        w-full
+        max-h-[90vh]
+        overflow-y-auto
+        shadow-2xl
+        relative
+      "
+    >
+
+      {/* Close Button */}
+      <button
+        onClick={() => setSelectedProject(null)}
+        className="
+        bg-white
+        rounded-[32px]
+        overflow-hidden
+        max-w-3xl
+        w-full
+        max-h-[85vh]
+        overflow-y-auto
+        shadow-2xl
+        relative
+        "
+      >
+        ✕
+      </button>
+
+      {/* Banner */}
+      <img
+        src={selectedProject.image}
+        alt={selectedProject.name}
+        className="w-full h-80 object-contain"
+      />
+
+      {/* Content */}
+      <div className="p-6">
+
+        <h2 className="text-3xl font-bold mb-2">
+          {selectedProject.name}
+        </h2>
+
+        <p className="text-blue-500 font-medium mb-6">
+          {selectedProject.tech}
+        </p>
+
+        <h3 className="text-xl font-semibold mb-3">
+          Key Insights
+        </h3>
+
+        <ul className="space-y-3">
+
+          {selectedProject.details?.map((item, index) => (
+
+            <li
+              key={index}
+              className="flex items-center gap-3"
+            >
+              📊 {item}
+            </li>
+
+          ))}
+
+        </ul>
+
+      </div>
+
+    </div>
+
+  </div>
+
+)}
     </div>
   );
   }
