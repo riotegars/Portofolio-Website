@@ -19,6 +19,9 @@ import {
 import { TypeAnimation } from "react-type-animation";
 import { useState, useEffect, useRef } from "react";
 import { motion } from "framer-motion";
+import biLogo from "./assets/logo bi.png";
+import ipcLogo from "./assets/Logo_Baru_Pelindo_(2021).png";
+import Swal from "sweetalert2";
 
 function AnimatedCounter({ end, suffix = "" }) {
   const [count, setCount] = useState(0);
@@ -89,6 +92,7 @@ export default function PortfolioWebsite() {
     {
       title: "Power Apps Developer Intern",
       company: "Bank Indonesia",
+      logo: biLogo,
       year: "July 2024 - October 2024",
       desc: [
               "Improving the internal application used by employees for document number generation.",
@@ -100,6 +104,7 @@ export default function PortfolioWebsite() {
     {
       title: "Technical Writer",
       company: "PT IPC Terminal Petikemas",
+      logo: ipcLogo,
       year: "August 2025 - Present",
       desc: [
         "Analyzed system workflows and business processes, documenting them through diagrams and technical specifications.",
@@ -181,22 +186,47 @@ export default function PortfolioWebsite() {
     }
   ];
   const sendEmail = (e) => {
-    e.preventDefault();
+  e.preventDefault();
 
-    emailjs.sendForm(
-      "portofolio_contact",
-      "template_p33fscr",
-      e.target,
-      "rmvUfrkrTrcjpKSIu"
-    )
-    .then(() => {
-      alert("Message Sent Successfully!");
-    })
-    .catch((error) => {
-      console.log(error);
-      alert("Failed to send message.");
+  emailjs.sendForm(
+    "portofolio_contact",
+    "template_p33fscr",
+    e.target,
+    "rmvUfrkrTrcjpKSIu"
+  )
+  .then(() => {
+
+    Swal.fire({
+      toast: true,
+      position: "top-end",
+      icon: "success",
+      title: "Email sent successfully!",
+      showConfirmButton: false,
+      timer: 3000,
+      timerProgressBar: true,
     });
-  };
+
+    e.target.reset();
+
+  })
+  .catch((error) => {
+
+    console.error(error);
+
+        Swal.fire({
+      toast: true,
+      position: "top-end",
+      icon: "success",
+      title: "Email sent successfully!",
+      showConfirmButton: false,
+      timer: 3000,
+      timerProgressBar: true,
+      background: "#ffffff",
+      color: "#1f2937",
+    });
+
+  });
+};
 const stats = [
   {
     icon: <FaChartBar />,
@@ -323,7 +353,7 @@ const prevProjects = () => {
   {/* Left Side */}
   <div>
 
-    <h1 className="text-5xl md:text-6xl font-bold leading-tight mb-5">
+    <h1 className="text-5xl md:text-6xl font-bold leading-tight mb-2">
       Rio Tegar Syahputra
 
 <TypeAnimation
@@ -340,7 +370,7 @@ const prevProjects = () => {
   wrapper="span"
   speed={50}
   repeat={Infinity}
-  className="block mt-3 text-2xl md:text-3xl font-bold leading-relaxed bg-gradient-to-r from-blue-700 to-slate-800 bg-clip-text text-transparent"
+  className="block mt-3 text-3xl md:text-3xl font-bold leading-relaxed bg-gradient-to-r from-blue-700 to-slate-800 bg-clip-text text-transparent"
 />
     </h1>
 
@@ -348,34 +378,118 @@ const prevProjects = () => {
       Transforming raw data into actionable insights through SQL, Power BI, Tableau, and Python. Passionate about data storytelling, business intelligence, and data-driven decision making.
     </p>
 
-<div className="grid grid-cols-3 gap-4 mt-8 max-w-md">
+    <div className="grid grid-cols-3 gap-4 mt-8 max-w-md">
 
-  <div className="bg-white/80 backdrop-blur-sm rounded-2xl p-4 text-center shadow-md border border-gray-300">
-    <h3 className="text-2xl font-bold text-blue-800">
-      <AnimatedCounter end={5} suffix="+" />
-    </h3>
-    <p className="text-sm text-gray-500">
-      Projects
-    </p>
-  </div>
+    <div className="
+      group
+      bg-white/80
+      backdrop-blur-sm
+      rounded-2xl
+      p-4
+      text-center
+      shadow-md
+      border
+      border-gray-300
 
-  <div className="bg-white/80 backdrop-blur-sm rounded-2xl p-4 text-center shadow-md border border-gray-300">
-    <h3 className="text-2xl font-bold text-blue-800">
-      <AnimatedCounter end={2} />
-    </h3>
-    <p className="text-sm text-gray-500">
-      Experience
-    </p>
-  </div>
+      hover:-translate-y-3
+      hover:shadow-5x1
+      hover:border-white
 
-  <div className="bg-white/80 backdrop-blur-sm rounded-2xl p-4 text-center shadow-md border border-gray-300">
-    <h3 className="text-2xl font-bold text-blue-800">
-      <AnimatedCounter end={8} suffix="+" />
-    </h3>
-    <p className="text-sm text-gray-500">
-      Analytics Tools
-    </p>
-  </div>
+      transition-all
+      duration-300
+      cursor-pointer
+    ">
+
+      <h3 className="
+        text-2xl
+        font-bold
+        text-blue-800
+        transition-transform
+        duration-300
+        group-hover:scale-110
+      ">
+        <AnimatedCounter end={5} suffix="+" />
+      </h3>
+
+      <p className="text-sm text-gray-500">
+        Projects
+      </p>
+
+    </div>
+
+    <div className="
+      group
+      bg-white/80
+      backdrop-blur-sm
+      rounded-2xl
+      p-4
+      text-center
+      shadow-md
+      border
+      border-gray-300
+
+      hover:-translate-y-3
+      hover:shadow-5x1
+      hover:border-white
+
+      transition-all
+      duration-300
+      cursor-pointer
+    ">
+
+      <h3 className="
+        text-2xl
+        font-bold
+        text-blue-800
+        transition-transform
+        duration-300
+        group-hover:scale-110
+      ">
+        <AnimatedCounter end={2} suffix="+" />
+      </h3>
+
+      <p className="text-sm text-gray-500">
+        Eksperience
+      </p>
+
+    </div>
+
+    <div className="
+      group
+      bg-white/80
+      backdrop-blur-sm
+      rounded-2xl
+      p-4
+      text-center
+      shadow-md
+      border
+      border-gray-300
+
+      hover:-translate-y-3
+      hover:shadow-5x1
+      hover:border-white
+
+      transition-all
+      duration-300
+      cursor-pointer
+    ">
+
+      <h3 className="
+        text-2xl
+        font-bold
+        text-blue-800
+        transition-transform
+        duration-300
+        group-hover:scale-110
+      ">
+        <AnimatedCounter end={8} suffix="+" />
+      </h3>
+
+      <p className="text-sm text-gray-500">
+        Analytics Tools
+      </p>
+
+    </div>
 
 </div>
     <div className="mt-10 flex flex-col sm:flex-row gap-4">
@@ -609,20 +723,43 @@ const prevProjects = () => {
 
               <div
                 key={index}
-                className="bg-white border border-gray-200 rounded-3xl p-8 shadow-lg hover:border-blue-400 transition"
+               className="
+                            group
+                            bg-white
+                            rounded-3xl
+                            p-8
+                            shadow-lg
+                            border
+                            border-gray-200
+                            hover:-translate-y-3
+                            hover:shadow-5x1
+                            hover:border-grey-500
+                            transition-all
+                            duration-300
+                          "
               >
 
                 <div className="flex flex-col md:flex-row md:justify-between md:items-center mb-4">
 
-                  <div>
-                    <h3 className="text-2xl font-semibold">
-                      {exp.title}
-                    </h3>
+                  <div className="flex items-center gap-4">
 
-                    <p className="text-blue-500">
-                      {exp.company}
-                    </p>
-                  </div>
+                <img
+                  src={exp.logo}
+                  alt={exp.company}
+                  className="w-14 h-14 object-contain rounded-xl bg-white p-1 shadow-sm"
+                />
+
+                <div>
+                  <h3 className="text-2xl font-semibold">
+                    {exp.title}
+                  </h3>
+
+                  <p className="text-blue-900 font-medium">
+                    {exp.company}
+                  </p>
+                </div>
+
+              </div>
 
                   <span className="text-gray-500 mt-2 md:mt-0">
                     {exp.year}
@@ -634,7 +771,7 @@ const prevProjects = () => {
                   {exp.desc.map((item, i) => (
                     <div key={i} className="flex items-start gap-3">
 
-                      <FaCheckCircle className="text-blue-500 mt-1 text-sm" />
+                      <FaCheckCircle className="text-blue-800 mt-1 text-sm" />
 
                       <p className="text-gray-600 leading-relaxed">
                         {item}
@@ -810,7 +947,7 @@ const prevProjects = () => {
         Get In Touch
       </h2>
 
-      <div className="w-24 h-1 bg-gradient-to-r bg-gradient-to-r from-blue-700 to-slate-800 mx-auto rounded-full mb-4" />
+      <div className="w-24 h-1 bg-gradient-to-r from-blue-700 to-slate-800 mx-auto rounded-full mb-4" />
 
       <p className="text-gray-500 text-xl">
         Let's discuss opportunities
