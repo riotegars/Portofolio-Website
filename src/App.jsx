@@ -22,6 +22,7 @@ import { motion } from "framer-motion";
 import biLogo from "./assets/logo bi.png";
 import ipcLogo from "./assets/Logo_Baru_Pelindo_(2021).png";
 import Swal from "sweetalert2";
+import { Analytics } from "@vercel/analytics/react";
 
 function AnimatedCounter({ end, suffix = "" }) {
   const [count, setCount] = useState(0);
@@ -586,6 +587,125 @@ const prevProjects = () => {
 
         </div>
       </section>
+              {/* Projects */}
+  <section
+  id="projects"
+  className="max-w-6xl mx-auto px-6 py-24"
+>
+
+  <div className="flex justify-between items-center mb-12">
+
+    <h2 className="text-4xl font-bold">
+      Featured Projects
+    </h2>
+
+    <div className="flex gap-3">
+
+<button
+  onClick={prevProjects}
+  className="
+    w-12 h-12
+    rounded-xl
+    border border-gray-200
+    bg-white/80
+    backdrop-blur-md
+    shadow-md
+    hover:shadow-lg
+    hover:-translate-y-1
+    transition-all
+  "
+>
+  ←
+</button>
+
+<button
+  onClick={nextProjects}
+  className="
+    w-12 h-12
+    rounded-xl
+    bg-blue-800
+    text-white
+    shadow-md
+    hover:bg-blue-900
+    hover:-translate-y-1
+    hover:shadow-lg
+    transition-all
+  "
+>
+  →
+</button>
+
+    </div>
+
+  </div>
+
+  <motion.div
+    key={startIndex}
+    initial={{ x: 80, opacity: 0 }}
+    animate={{ x: 0, opacity: 1 }}
+    transition={{
+    duration: 0.6,
+    ease: [0.22, 1, 0.36, 1],
+     }}
+    className="grid md:grid-cols-3 gap-8"
+  >
+    {projects
+    .slice(startIndex, startIndex + 3)
+    .map((project, index) => (
+
+      <div
+        key={index}
+        onClick={() => setSelectedProject(project)}
+        className="
+          cursor-pointer
+          bg-white
+          border
+          border-gray-200
+          rounded-3xl
+          p-8
+          shadow-lg
+          hover:-translate-y-2
+          hover:shadow-xl
+          transition-all
+          duration-300
+        "
+      >
+
+          <div className="
+            w-14 h-14
+            rounded-2xl
+            bg-blue-900
+            text-white
+            flex
+            items-center
+            justify-center
+            font-bold
+            mb-6
+          ">
+            {startIndex + index + 1}
+          </div>
+
+          <h3 className="text-xl font-bold mb-3">
+            {project.name}
+          </h3>
+
+          <p className="text-blue-700 text-sm mb-4">
+            {project.tech}
+          </p>
+
+          <p className="text-gray-600 text-sm line-clamp-4">
+            {project.desc}
+          </p>
+
+          <div className="mt-6 text-blue-700 font-medium">
+            View Details →
+          </div>
+
+        </div>
+
+      ))}
+
+  </motion.div>
 
       {/* Technical Skills */}
 <section id="skills" className="py-24 px-6 bg-gray-50">
@@ -790,125 +910,7 @@ const prevProjects = () => {
         </div>
       </section>
 
-        {/* Projects */}
-  <section
-  id="projects"
-  className="max-w-6xl mx-auto px-6 py-24"
->
 
-  <div className="flex justify-between items-center mb-12">
-
-    <h2 className="text-4xl font-bold">
-      Featured Projects
-    </h2>
-
-    <div className="flex gap-3">
-
-<button
-  onClick={prevProjects}
-  className="
-    w-12 h-12
-    rounded-xl
-    border border-gray-200
-    bg-white/80
-    backdrop-blur-md
-    shadow-md
-    hover:shadow-lg
-    hover:-translate-y-1
-    transition-all
-  "
->
-  ←
-</button>
-
-<button
-  onClick={nextProjects}
-  className="
-    w-12 h-12
-    rounded-xl
-    bg-blue-800
-    text-white
-    shadow-md
-    hover:bg-blue-900
-    hover:-translate-y-1
-    hover:shadow-lg
-    transition-all
-  "
->
-  →
-</button>
-
-    </div>
-
-  </div>
-
-  <motion.div
-    key={startIndex}
-    initial={{ x: 80, opacity: 0 }}
-    animate={{ x: 0, opacity: 1 }}
-    transition={{
-    duration: 0.6,
-    ease: [0.22, 1, 0.36, 1],
-     }}
-    className="grid md:grid-cols-3 gap-8"
-  >
-    {projects
-    .slice(startIndex, startIndex + 3)
-    .map((project, index) => (
-
-      <div
-        key={index}
-        onClick={() => setSelectedProject(project)}
-        className="
-          cursor-pointer
-          bg-white
-          border
-          border-gray-200
-          rounded-3xl
-          p-8
-          shadow-lg
-          hover:-translate-y-2
-          hover:shadow-xl
-          transition-all
-          duration-300
-        "
-      >
-
-          <div className="
-            w-14 h-14
-            rounded-2xl
-            bg-blue-900
-            text-white
-            flex
-            items-center
-            justify-center
-            font-bold
-            mb-6
-          ">
-            {startIndex + index + 1}
-          </div>
-
-          <h3 className="text-xl font-bold mb-3">
-            {project.name}
-          </h3>
-
-          <p className="text-blue-700 text-sm mb-4">
-            {project.tech}
-          </p>
-
-          <p className="text-gray-600 text-sm line-clamp-4">
-            {project.desc}
-          </p>
-
-          <div className="mt-6 text-blue-700 font-medium">
-            View Details →
-          </div>
-
-        </div>
-
-      ))}
-
-  </motion.div>
 
 </section>
       {/* CTA */}
