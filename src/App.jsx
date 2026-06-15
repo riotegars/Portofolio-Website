@@ -119,6 +119,19 @@ export default function PortfolioWebsite() {
   ];
 
   const projects = [
+   {
+      name: "Jakarta Public Transport Accessibility Analysis",
+      tech: "Power BI, Python, Pandas, GeoPandas",
+      desc: "An end-to-end data analytics project that evaluates public transport accessibility across Jakarta districts by analyzing the gap between population mobility needs and transport infrastructure availability.",
+      link: "https://github.com/riotegars/jakarta-public-transport-accessibility-analysis",
+      image: "jakarta-dashboard.jpg",
+      details:[
+                "Developed Demand Score, Supply Score, and Gap Score metrics to measure accessibility inequalities.",
+                "Performed geospatial analysis across 44 districts using GeoPandas and Jakarta administrative boundary data",
+                "Identified Johar Baru, Koja, and Cilincing as districts with the highest public transport accessibility gaps.",
+                "Built an interactive Power BI dashboard to visualize transport accessibility, infrastructure distribution, and underserved areas.",
+                "Revealed that public transport infrastructure distribution is not yet fully aligned with mobility demand across several districts in North and East Jakarta."]
+    },
     {
       name: "Chelsea FC Performance Analysis",
       tech: "Power BI, PostgreSQL",
